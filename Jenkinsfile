@@ -28,7 +28,7 @@ pipeline {
             stage('Push image') {
                 steps {     
                    echo 'Trying to Push Docker Build to DockerHub'
-                   docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
+                   docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') 
                    cart.push("${env.BUILD_NUMBER}")
                    
                 }
