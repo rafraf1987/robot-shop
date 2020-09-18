@@ -1,14 +1,14 @@
- pipeline {
-        agent any
+pipeline {
+    agent any
        
         stages {
             stage('clone repository') {
                 steps {
-                     echo 'clone repository'
-                     git 'https://github.com/rafraf1987/robot-shop'
-                     
-                    }
-                    
+                    echo 'clone repository'
+                    git 'https://github.com/rafraf1987/robot-shop'
+                 
+                }    
+            }        
             stage('Build image') {
                 steps {
                     echo 'Starting to build docker images'
@@ -22,17 +22,17 @@
                         def user = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/user/Dockerfile .")
                         def web = docker.build("my-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/web/Dockerfile .")
                     }
-                    
+                }  
+            }    
 
             stage('Push image') {
                 steps {     
-                   echo "Trying to Push Docker Build to DockerHub"
+                   echo 'Trying to Push Docker Build to DockerHub'
                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
                    cart.push("${env.BUILD_NUMBER}")
-                   }
+                   
                 }
             }
         }
     }
-
-
+}
