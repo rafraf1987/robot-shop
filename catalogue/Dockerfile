@@ -2,7 +2,7 @@ FROM node:10
 
 EXPOSE 8080
 
-WORKDIR /opt/server
+WORKDIR /opt/server/
 
 COPY package.json /opt/server/
 
