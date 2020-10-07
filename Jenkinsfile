@@ -21,7 +21,7 @@ node {
     
 
 	stage('SCM Checkout') {
-		checkout scm
+		checkout([$class: 'GitSCM', branches: [[name: '*/devops']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rafraf1987/robot-shop.git']]])
 	}
 
 
