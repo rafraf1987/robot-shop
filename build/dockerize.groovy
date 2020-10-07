@@ -12,10 +12,7 @@ ROBOT_SHOP_SERVICES = [
 	"web": "web-ms",
 ]
 
-node {	    
-               stage('SCM Checkout') {
-		checkout([$class: 'GitSCM', branches: [[name: '*/devops']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rafraf1987/robot-shop']]])
-	}
+
  def dockerizeServices(version){
 	withEnv([
 		"VERSION=${version}",
