@@ -1,39 +1,29 @@
-#!/usr/bin/env groovy
-
 node {
+       
+            stage('clone repository') {
+                    echo 'clone repository'
+                    git 'https://github.com/rafraf1987/robot-shop'
+                 
+                }    
+                  
+            stage('Build image') {
+                        echo 'Starting to build docker images'
+                        def cart = docker.build("cart-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/cart/Dockerfile ./cart")
+                        def catalogue = docker.build("catalogue-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/catalogue/Dockerfile ./cataloige") 
+                        def mongo = docker.build("mongo-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/mongo/Dockerfile ./mongo") 
+                        def mysql = docker.build("mysql-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/mysql/Dockerfile ./mysql")
+                        def payment = docker.build("payment-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/payment/Dockerfile ./payment") 
+                        def shiping = docker.build("shiping-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/shiping/Dockerfile ./shiping") 
+                        def user = docker.build("user-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/user/Dockerfile ./user")
+                        def web = docker.build("web-image:${env.BUILD_ID}","-f ${env.WORKSPACE}/web/Dockerfile ./web")
+                    }
 
-	stage('Environment Setup') {
-		if (env.BRANCH_NAME=='master'){
-			properties([
-				buildDiscarder(logRotator(numToKeepStr: '30')),
-			])
-			SKIP_TESTS = "true"
-		} else {
-			properties([
-				buildDiscarder(logRotator(numToKeepStr: '3')),
-				parameters([booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip test for quick build')])
-			])
-			SKIP_TESTS = "${params.SKIP_TESTS}"
-		}
-		echo "Building and Dockerizing Branch ${env.BRANCH_NAME} No. ${env.BUILD_NUMBER} in Workspace ${env.WORKSPACE}"
-		slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-	}
-    
-
-	stage('SCM Checkout') {
-		checkout([$class: 'GitSCM', branches: [[name: '*/devops']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/rafraf1987/robot-shop.git']]])
-	}
-
-
-	def dockerize  = load('build/dockerize.groovy')
-
-
-
-		withEnv([
-			"IMAGE_NAME=${env.BRANCH_NAME.replace('@','_').replace(' ','_').replace('-','_')}_build_${env.BUILD_NUMBER}",
-		]) {
-			dockerize.dockerizeServices(IMAGE_NAME)
-			dockerize.pushImages(IMAGE_NAME)
-		}
-	}  
-
+            stage('Push image') {
+                   echo 'Trying to Push Docker Build to DockerHub'
+                   docker.withRegistry('https://registry.hub.docker.com', 'docker_hub') {
+                     cart.push("${env.BUILD_NUMBER}")
+                     cart.push("latest")
+                    
+                }
+            }
+        }
