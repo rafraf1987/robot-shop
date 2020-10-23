@@ -1,9 +1,9 @@
 #!/usr/bin/env groovy
 
-node {
-
 IMAGE_NAME = "${env.BRANCH_NAME.replace('@','_').replace(' ','_').replace('-','_')}_build_${env.BUILD_NUMBER}"
 
+node {
+	
 	stage('SCM Checkout') {
 		checkout scm
 	}
