@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-IMAGE_NAME = "${env.BRANCH_NAME.replace('@','_').replace(' ','_').replace('-','_')}_build_${env.BUILD_NUMBER}"
-
 node {
 	
 	stage('SCM Checkout') {
@@ -12,8 +10,8 @@ node {
  
     stage('Build'){
         
-			dockerize.dockerizeServices(IMAGE_NAME)
-			dockerize.pushImages(IMAGE_NAME)
+			dockerize.dockerizeServices()
+			dockerize.pushImages()
 		}
 		
 	}
