@@ -64,7 +64,3 @@ def pushImages(version, boolean removeImages = true){
 			}
 		)
 	}
-
-
-
-
