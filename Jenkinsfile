@@ -15,5 +15,3 @@ node {
 		dockerize.dockerizeServices(${env.BRANCH_NAME})
 		dockerize.pushImages(${env.BRANCH_NAME})
         }
-
-}
