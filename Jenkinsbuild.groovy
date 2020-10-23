@@ -62,7 +62,7 @@ def pushImages(version, boolean removeImages = true){
 				}
 				parallel tasks
 			}
-		}
+		)
 	}
 
 
