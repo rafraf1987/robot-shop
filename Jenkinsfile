@@ -10,8 +10,8 @@ node {
  
         stage('Build'){
         
-	         dockerize.dockerizeServices("${env.BRANCH_NAME}")
-	         dockerize.pushImages("${env.BRANCH_NAME}")
+	         dockerize.dockerizeServices("${env.WORKSPACE}")
+	         dockerize.pushImages("${env.WORKSPACE}")
 		}
 		
 	}
