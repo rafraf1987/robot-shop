@@ -8,10 +8,10 @@ node {
 
 	def dockerize  = load('./Jenkinsbuild.groovy')
  
-    stage('Build'){
+        stage('Build'){
         
-			dockerize.dockerizeServices()
-			dockerize.pushImages()
+	         dockerize.dockerizeServices("${env.BRANCH_NAME}")
+	         dockerize.pushImages("${env.BRANCH_NAME}")
 		}
 		
 	}
