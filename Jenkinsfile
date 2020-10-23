@@ -10,4 +10,4 @@ node {
 
 	def dockerize  = load('./Jenkinsbuild.groovy')
 
-
+}
