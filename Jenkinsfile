@@ -12,8 +12,8 @@ node {
 
     stage('Build'){
         
-			dockerize.dockerizeServices(IMAGE_NAME)
-			dockerize.pushImages(IMAGE_NAME)
+			dockerize.dockerizeServices
+			dockerize.pushImages
 		}
 		
 	}
