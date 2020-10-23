@@ -9,11 +9,11 @@ node {
 	}
 
 	def dockerize  = load('./Jenkinsbuild.groovy')
-	   withEnv([
-			"IMAGE_NAME=${env.BRANCH_NAME.replace('@','_').replace(' ','_').replace('-','_')}_build_${env.BUILD_NUMBER}",
-		]) {
-			dockerize.dockerizeServices(IMAGE_NAME)
-			dockerize.pushImages(IMAGE_NAME)
-		}
+	 
+	
+	stage('Build)'{
+		dockerize.dockerizeServices(${env.BRANCH_NAME})
+		dockerize.pushImages(${env.BRANCH_NAME})
+        }
 
 }
