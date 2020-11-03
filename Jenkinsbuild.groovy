@@ -46,7 +46,7 @@ def pushImages(version, boolean removeImages = true){
 			stage ("Pushing Docker Images"){
 				def tasks = [:]
 
-				EVA_BACKEND_SERVICES.each { entry ->
+				ROBOT_SHOP_SERVICES.each { entry ->
 					println "Name: $entry.key Age: $entry.value"
 
 					tasks["$entry.value"] = {
@@ -63,6 +63,6 @@ def pushImages(version, boolean removeImages = true){
 				parallel tasks
 			}
 		)
-	
+
 	}
 }
