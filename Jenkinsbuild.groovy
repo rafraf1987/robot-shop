@@ -46,7 +46,7 @@ def pushImages(version, boolean removeImages = true){
     ]) {
         docker.withRegistry('https://registry.hub.docker.com','docker_hub' {
             stage ("Pushing Docker Images"){
-                def tasks = [:]
+                tasks = [:]
 
                 ROBOT_SHOP_SERVICES.each { entry ->
                     println "Name: $entry.key image: $entry.value"
