@@ -17,14 +17,12 @@ def dockerizeServices(version){
     withEnv([
         "VERSION=${version}",
     ]) {
-
         stage ("Building Docker Images"){
              docker.withRegistry('https://registry.hub.docker.com','docker_hub') {
                 /* groovylint-disable-next-line NoDef, VariableTypeRequired */
                 tasks = [:]
 
                 ROBOT_SHOP_SERVICES.each { entry ->
-
                     println "Name: $entry.key image: $entry.value"
                     tasks["$entry.value"] = {
                             /* groovylint-disable-next-line NestedBlockDepth */
@@ -66,8 +64,8 @@ def pushImages(version, boolean removeImages = true){
                     }
                 }
                 parallel tasks
-            }
-        )
+            } 
+        }   
     }
-}
+
 return this
