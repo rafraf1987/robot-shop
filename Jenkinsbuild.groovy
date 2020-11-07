@@ -29,7 +29,7 @@ def dockerizeServices(version){
                     tasks["$entry.value"] = {
                             /* groovylint-disable-next-line NestedBlockDepth */
                             dir("./$entry.key") {
-                                sh "docker build -t ${DOCKER_IMAGE_REPOSITORY}/$entry.value:${VERSION}"
+                                sh "docker build -t ${DOCKER_IMAGE_REPOSITORY}/$entry.value:${VERSION} ."
                             }
                         }
                     }
