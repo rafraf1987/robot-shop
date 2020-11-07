@@ -20,7 +20,8 @@ def dockerizeServices(version){
 
         stage ("Building Docker Images"){
              docker.withRegistry('https://registry.hub.docker.com','docker_hub') {
-                def tasks = [:]
+                /* groovylint-disable-next-line NoDef, VariableTypeRequired */
+                tasks = [:]
 
                 ROBOT_SHOP_SERVICES.each { entry ->
 
