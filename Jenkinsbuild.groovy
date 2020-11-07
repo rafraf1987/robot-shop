@@ -44,8 +44,9 @@ def pushImages(version, boolean removeImages = true){
     withEnv([
         "VERSION=${version}",
     ]) {
-        docker.withRegistry('https://registry.hub.docker.com','docker_hub' {
-            stage ("Pushing Docker Images"){
+        stage ("Pushing Docker Images"){
+             docker.withRegistry('https://registry.hub.docker.com','docker_hub') {
+           
                 tasks = [:]
 
                 ROBOT_SHOP_SERVICES.each { entry ->
