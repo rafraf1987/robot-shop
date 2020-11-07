@@ -28,7 +28,7 @@ def dockerizeServices(version){
                     println "Name: $entry.key image: $entry.value"
                     tasks["$entry.value"] = {
                             /* groovylint-disable-next-line NestedBlockDepth */
-                            dir("$entry.key") {
+                            dir("./$entry.key") {
                                 sh "docker build -t ${DOCKER_IMAGE_REPOSITORY}/$entry.value:${VERSION}"
                             }
                         }
@@ -53,7 +53,7 @@ def pushImages(version, boolean removeImages = true){
 
                     tasks["$entry.value"] = {
                             /* groovylint-disable-next-line NestedBlockDepth */
-                            dir("$entry.key") {
+                            dir("./$entry.key") {
                                 sh "docker push ${DOCKER_IMAGE_REPOSITORY}/$entry.value:${VERSION}"
                                 /* groovylint-disable-next-line NestedBlockDepth */
                                 if (removeImages == true) {
